@@ -1,0 +1,15 @@
+/home/roman/netcore/sorting/generator/obj/Debug/net6.0/generator.csproj.AssemblyReference.cache
+/home/roman/netcore/sorting/generator/obj/Debug/net6.0/generator.GeneratedMSBuildEditorConfig.editorconfig
+/home/roman/netcore/sorting/generator/obj/Debug/net6.0/generator.AssemblyInfoInputs.cache
+/home/roman/netcore/sorting/generator/obj/Debug/net6.0/generator.AssemblyInfo.cs
+/home/roman/netcore/sorting/generator/obj/Debug/net6.0/generator.csproj.CoreCompileInputs.cache
+/home/roman/netcore/sorting/generator/bin/Debug/net6.0/generator
+/home/roman/netcore/sorting/generator/bin/Debug/net6.0/generator.deps.json
+/home/roman/netcore/sorting/generator/bin/Debug/net6.0/generator.runtimeconfig.json
+/home/roman/netcore/sorting/generator/bin/Debug/net6.0/generator.dll
+/home/roman/netcore/sorting/generator/bin/Debug/net6.0/generator.pdb
+/home/roman/netcore/sorting/generator/obj/Debug/net6.0/generator.dll
+/home/roman/netcore/sorting/generator/obj/Debug/net6.0/refint/generator.dll
+/home/roman/netcore/sorting/generator/obj/Debug/net6.0/generator.pdb
+/home/roman/netcore/sorting/generator/obj/Debug/net6.0/generator.genruntimeconfig.cache
+/home/roman/netcore/sorting/generator/obj/Debug/net6.0/ref/generator.dll
