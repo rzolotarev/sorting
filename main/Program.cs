@@ -5,18 +5,19 @@ using System.Diagnostics;
 var builder = new TreeBuilder();
 var parser = new Parser("input.txt");
 
-// using(var file = File.Create("output.txt"))
-// {
-//     using(var fs = new StreamWriter(file))
-//     {
-//         fs.WriteLine(DateTime.Now);
-    
-        
- 
-//     }
+var stopW = new Stopwatch();
+stopW.Start();
+File.Delete("output.txt");
+using(var file = File.Create("output.txt"))
+{
+    using(var fs = new StreamWriter(file))
+    {
+        fs.WriteLine(stopW.Elapsed);             
+    }
 
-// }
+}
 var blCollection = new BlockingCollection<Node>();
+
 
 var thr = new Thread(() => {
 {
@@ -34,7 +35,6 @@ thr.Start();
 
 Node node;
 var delat = TimeSpan.FromSeconds(1.0);
-var stopW = new Stopwatch();
 while(blCollection.TryTake(out node, delat))
 {
     // stopW.Start();
@@ -42,15 +42,17 @@ while(blCollection.TryTake(out node, delat))
     // Console.WriteLine(stopW.Elapsed);
 }
 Console.WriteLine("processed");
-
+Console.WriteLine($"pages {Page.pages}");
+var dur = stopW.Elapsed;
+Console.WriteLine(dur);
 blCollection.Dispose();
- using(var file = File.Create("output.txt"))
+ using(var file = File.Open("output.txt", FileMode.Append))
 {
     using(var fs = new StreamWriter(file))
     {
-        foreach(var item in builder.GetInOrder())       
+        foreach(var item in builder.GetInOrder())
             fs.WriteLine(item);
         
-        fs.WriteLine(DateTime.Now);
+        // fs.WriteLine(dur);
     }
 }

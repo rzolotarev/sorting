@@ -1,6 +1,6 @@
 public class Node : IComparable<Node>
 {
-    public Node(string key1, int key2, long position, int length)
+    public Node(int key1, string key2, long position, int length)
     {
         Key1 = key1;
         Key2 = key2;
@@ -12,7 +12,7 @@ public class Node : IComparable<Node>
 
     public static Node GetHead(Page rightDownPage)
     {
-        return new Node() { Key2 = Int32.MinValue, RightDownPage =  rightDownPage};
+        return new Node() { Key1 = Int32.MinValue, RightDownPage =  rightDownPage};
     }
 
     public Node Copy()
@@ -23,8 +23,8 @@ public class Node : IComparable<Node>
         return copy;
     }
 
-    public int Key2 { get; private set; }
-    public string Key1 { get; private set; }
+    public string Key2 { get; private set; }
+    public int Key1 { get; private set; }
     public long Position { get; private set; }
     public int Length { get; private set; }
     public Node Next {get;set;}
@@ -34,8 +34,8 @@ public class Node : IComparable<Node>
         if (other is null)
             throw new NullReferenceException("compare with null");
 
-        if (string.IsNullOrWhiteSpace(Key1) && Key2 == Int32.MinValue)
-            return -1;
+        // if (string.IsNullOrWhiteSpace(Key1) && Key2 == Int32.MinValue)
+        //     return -1;
 
 
         var firstComparison = Key1.CompareTo(other.Key1);

@@ -7,9 +7,10 @@ using (var logFile = System.IO.File.Create (logPath)) {
     // Generate a random number  
     Random random = new Random ();
 
+    var count = 0;
     using (var sw = new StreamWriter (logFile)) {
-        for (var i = 0; i < 883647; i++) {
-            var str = RandomString (random, 10);
+        for (var i = 0; i < 52700000; i++) {
+            var str = random.Next(1, 52700000);//RandomString (random, 10);
             sw.WriteLine ($"{random.Next()}. {str}");
         }
     }

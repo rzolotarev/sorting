@@ -13,7 +13,7 @@ public class Parser
         foreach (var line in lines) 
         {
             var parsed = line.Split(". ");
-            yield return new Node(parsed[1], Int32.Parse(parsed[0]), 0, 0);
+            yield return new Node(Int32.Parse(parsed[1]),parsed[0], 0, 0);
         }        
     }
 

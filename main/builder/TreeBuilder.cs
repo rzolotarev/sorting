@@ -16,19 +16,17 @@ public class TreeBuilder
     public IEnumerable<string> GetInOrder()
     {
         var page = Root;
-        var level = 1;
-        Console.WriteLine($"deep {level}");
-        page.traverse();
+        var level = 1;        
+        // page.traverse();
         while(page.Head.RightDownPage != null) {
             page = page.Head.RightDownPage;                        
-            level++;    
-            Console.WriteLine($"deep {level}");
+            level++;                
             // var page1 = page;
             // do {
             // page1.traverse();        
             // } while((page1 = page1.RightPage) != null);
         }
-        
+        Console.WriteLine($"deep {level}");
         while(page != null)
         {            
             var node = page.Head.Next;
@@ -37,7 +35,7 @@ public class TreeBuilder
                 yield return $"{node.Key1}-{node.Key2}";
                 node = node.Next;
             }
-            // Console.WriteLine();
+            // Console.WriteLine(page.Size);
             page = page.RightPage;
         }
         Console.WriteLine("----------------");

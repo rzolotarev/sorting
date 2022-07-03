@@ -8,24 +8,21 @@ public class Page
     public Node Head { get; private set; }
     public Node? Half { get; private set; }    
     public Page? RightPage { get; private set; }
-    private static int pages = 0;
+    public static int pages = 0;
+    public int Number {get;set;}
     // odd capacity to have even after adding a node without 
-    public Page(Page? parent = null, Node? first = null, Page? rightDownPage = null, int capacity = 31)
+    public Page(Page? parent = null, Node? first = null, Page? rightDownPage = null, int capacity = 31, bool parentSign = true)
     {
-        Console.WriteLine($"page {++pages}");
+        // pages++;
+        Number = ++pages;
+        // if (parentSign)
+        //     Console.WriteLine($"parent page {Number}");
+        // else
+        //     Console.WriteLine($"sibling page {Number}");
         Head = Node.GetHead(rightDownPage);
         Head.Next = first;
         Parent = parent;        
         Capacity = capacity;
-    }
-
-    public Page(Node? first, Page? rightDownPage = null, int size = 0, int capacity = 31)
-    {
-        Console.WriteLine($"page {++pages}");
-        Head = Node.GetHead(rightDownPage);
-        Head.Next = first;        
-        Size = size;
-        Capacity = capacity;        
     }
     #endregion
 
@@ -78,7 +75,8 @@ public class Page
     }
     
     private void Insert(Node node)
-    {        
+    {
+        var position = 0;
         if (Size == 0) {   
             Head.Next = node;
             Size++;
@@ -87,14 +85,16 @@ public class Page
 
         var size = Size;        
         var currentNode = Head;        
-        while(currentNode.Next is not null) {
+        while(currentNode.Next is not null) {         
+                
             if (currentNode.Next.CompareTo(node) < 0) {                
                 currentNode = currentNode.Next;
             }
             else {                
                 node.Next = currentNode.Next;
-                currentNode.Next = node;                
+                currentNode.Next = node;          
                 Size++;
+                // Console.WriteLine($"{node.Key1} into page {Number}");
                 break;
             }                        
         }
@@ -145,11 +145,13 @@ public class Page
         if (Size < Capacity + 1)
             throw new NotSupportedException("there are rooms for emplacing");
       
-        // Console.WriteLine("increasing...");
+        // Console.WriteLine($"splitting... {Number}");
+        // this.traverse();
+        // Console.ReadLine();
 
         this.Parent = this.Parent ?? new Page(rightDownPage: this);
         var copyForSiblingNode = Half!.Next.Copy(); // should keep all references
-        var siblingPage = new Page(this.Parent, copyForSiblingNode);
+        var siblingPage = new Page(this.Parent, copyForSiblingNode, parentSign: false);
         
         siblingPage.RightPage = this.RightPage;
         this.RightPage = siblingPage;
@@ -158,7 +160,7 @@ public class Page
         if (copyForSiblingNode.RightDownPage is not null)
         {
             var depPage = copyForSiblingNode.RightDownPage;
-            while(depPage is not null) {
+            while(depPage is not null && depPage.Parent == this) {
                 depPage.Parent = siblingPage;
                 depPage = depPage.RightPage;
             }
