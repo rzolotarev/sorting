@@ -19,7 +19,8 @@ public class Pages
         var node8 = new Node("n", 5, 0, 0);
         var node9 = new Node("e", 5, 0, 0);
         var node10 = new Node("m", 5, 0, 0);
-        var node11 = new Node("z", 5, 0, 0);       
+        var node11 = new Node("z", 5, 0, 0);
+        var node12 = new Node("y", 5, 0, 0);
         builder.AddNode(node1);
         builder.AddNode(node2);
         Assert.AreEqual(2, builder.Root.Size);        
@@ -60,7 +61,8 @@ public class Pages
         Assert.AreEqual("g", builder.Root[1].Key1);
         Assert.AreEqual("g", builder.Root[1].RightDownPage![0].Key1);
         Assert.AreEqual("h", builder.Root[1].RightDownPage![1].Key1);
-        Assert.AreNotEqual(null, builder.Root[1].RightDownPage);
+        Assert.AreSame(builder.Root, builder.Root[1].RightDownPage!.Parent);
+        Assert.AreSame(builder.Root, builder.Root[0].RightDownPage!.Parent);
 
         builder.AddNode(node7); // f
         Assert.AreEqual(2, builder.Root.Size);        
@@ -75,6 +77,7 @@ public class Pages
         Assert.AreEqual(3, builder.Root[0].RightDownPage!.Size);
         Assert.AreEqual(3, builder.Root[1].RightDownPage!.Size);
         Assert.AreNotEqual(null, builder.Root[0].RightDownPage!.RightPage);
+        Assert.AreNotEqual(null, builder.Root[0].RightDownPage!.RightPage);
 
         builder.AddNode(node9); // e
         Assert.AreEqual(3, builder.Root.Size);      
@@ -84,6 +87,9 @@ public class Pages
         Assert.AreEqual(2, builder.Root[1].RightDownPage!.Size);
         Assert.AreEqual(3, builder.Root[2].RightDownPage!.Size);        
         Assert.AreNotEqual(null, builder.Root[1].RightDownPage!.RightPage);
+        Assert.AreSame(builder.Root, builder.Root[1].RightDownPage!.Parent);
+        Assert.AreSame(builder.Root, builder.Root[2].RightDownPage!.Parent);
+        Assert.AreSame(builder.Root, builder.Root[0].RightDownPage!.Parent);
 
         builder.AddNode(node10); // m
         Assert.AreEqual(1, builder.Root.Size);
@@ -94,11 +100,38 @@ public class Pages
         Assert.AreEqual(2, builder.Root.Head.RightDownPage!.Size);
         Assert.AreEqual("c", builder.Root.Head.RightDownPage![0].Key1);
         Assert.AreEqual("e", builder.Root.Head.RightDownPage![1].Key1);
-        Assert.AreNotEqual(null, builder.Root[0].RightDownPage![1].RightDownPage);
-        Assert.AreNotEqual(null, builder.Root[0].RightDownPage![0].RightDownPage);        
+        Assert.AreEqual(2, builder.Root[0].RightDownPage![1].RightDownPage!.Size);
+        Assert.AreEqual(2, builder.Root[0].RightDownPage![0].RightDownPage!.Size); 
+        Assert.AreEqual("m", builder.Root[0].RightDownPage![1].RightDownPage![0].Key1);
+        Assert.AreEqual("n", builder.Root[0].RightDownPage![1].RightDownPage![1].Key1);
+        Assert.AreEqual("g", builder.Root[0].RightDownPage![0].RightDownPage![0].Key1);
+        Assert.AreEqual("h", builder.Root[0].RightDownPage![0].RightDownPage![1].Key1);
+
+        Assert.AreSame(builder.Root, builder.Root[0].RightDownPage!.Parent);
+        Assert.AreSame(builder.Root, builder.Root.Head.RightDownPage!.Parent);  
+        Assert.AreSame(builder.Root[0].RightDownPage, builder.Root[0].RightDownPage![0].RightDownPage!.Parent);
+        Assert.AreSame(builder.Root[0].RightDownPage, builder.Root[0].RightDownPage![1].RightDownPage!.Parent);
+        Assert.AreSame(builder.Root.Head.RightDownPage, builder.Root.Head.RightDownPage![0].RightDownPage!.Parent);
+        Assert.AreSame(builder.Root.Head.RightDownPage, builder.Root.Head.RightDownPage![1].RightDownPage!.Parent);
 
         builder.AddNode(node7.Copy());
         builder.AddNode(node10.Copy());
-        builder.AddNode(node11.Copy());        
+        Assert.AreEqual(3, builder.Root[0].RightDownPage![1].RightDownPage!.Size);
+        Assert.AreEqual(2, builder.Root[0].RightDownPage![0].RightDownPage!.Size); 
+        Assert.AreSame(builder.Root[0].RightDownPage, builder.Root[0].RightDownPage![1].RightDownPage!.Parent);
+        Assert.AreEqual("m", builder.Root[0].RightDownPage![1].RightDownPage![0].Key1);
+        Assert.AreEqual("m", builder.Root[0].RightDownPage![1].RightDownPage![1].Key1);
+        Assert.AreEqual("n", builder.Root[0].RightDownPage![1].RightDownPage![2].Key1);
+        Assert.AreEqual("g", builder.Root[0].RightDownPage![0].RightDownPage![0].Key1);
+        Assert.AreEqual("h", builder.Root[0].RightDownPage![0].RightDownPage![1].Key1);
+
+
+        builder.AddNode(node11);
+        builder.AddNode(node12.Copy());
+        builder.AddNode(node12);
+        // foreach(var item in builder.GetInOrder())
+        // {
+        //     Console.WriteLine(item);
+        // }
     }
 }

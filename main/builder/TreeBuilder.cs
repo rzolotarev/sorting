@@ -17,21 +17,29 @@ public class TreeBuilder
     {
         var page = Root;
         var level = 1;
+        Console.WriteLine($"deep {level}");
+        page.traverse();
         while(page.Head.RightDownPage != null) {
             page = page.Head.RightDownPage;                        
-            level++;
+            level++;    
+            Console.WriteLine($"deep {level}");
+            // var page1 = page;
+            // do {
+            // page1.traverse();        
+            // } while((page1 = page1.RightPage) != null);
         }
-        Console.WriteLine($"deep {level}");
+        
         while(page != null)
-        {
-            Console.WriteLine(page.Size);
+        {            
             var node = page.Head.Next;
             while (node != null)
             {
                 yield return $"{node.Key1}-{node.Key2}";
                 node = node.Next;
             }
+            // Console.WriteLine();
             page = page.RightPage;
         }
+        Console.WriteLine("----------------");
     }
 }
