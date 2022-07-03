@@ -8,18 +8,20 @@ public class Page
     public Node Head { get; private set; }
     public Node? Half { get; private set; }    
     public Page? RightPage { get; private set; }
-
+    private static int pages = 1;
     // odd capacity to have even after adding a node without 
-    public Page(Page? parent = null, Node? first = null, Page? rightDownPage = null, int capacity = 63)
+    public Page(Page? parent = null, Node? first = null, Page? rightDownPage = null, int capacity = 31)
     {
+        Console.WriteLine(pages++);
         Head = Node.GetHead(rightDownPage);
         Head.Next = first;
         Parent = parent;        
         Capacity = capacity;
     }
 
-    public Page(Node? first, Page? rightDownPage = null, int size = 0, int capacity = 63)
+    public Page(Node? first, Page? rightDownPage = null, int size = 0, int capacity = 31)
     {
+        Console.WriteLine(pages++);
         Head = Node.GetHead(rightDownPage);
         Head.Next = first;        
         Size = size;
@@ -106,19 +108,24 @@ public class Page
 
         // traverse();
         
-        if (Size == Capacity + 1) {            
+        if (Size == Capacity + 1) {
+            // Console.WriteLine($"max size is reached {Size}");
+            // traverse();
+            // Console.ReadLine();
             Half = Center();
             IncreaseDepth();
+            return;
         }
     }    
 
-    private void traverse()
+    public void traverse()
     {
         var current = Head;
         while(current != null) {
-            // Console.Write(current.Key1);
+            Console.Write(current.Key1 + " ");
             current = current.Next;
         }
+        Console.WriteLine();
     }
 
     // TODO: refactor
@@ -131,14 +138,14 @@ public class Page
         Node node = Head.Next;
         while(index++ < Size / 2)
             node = node.Next;
-
         return node;
     }
 
     private void IncreaseDepth()
     {
         if (Size < Capacity + 1)
-            throw new NotSupportedException("there are rooms for emplacing");        
+            throw new NotSupportedException("there are rooms for emplacing");
+      
         // Console.WriteLine("increasing...");
 
         this.Parent = this.Parent ?? new Page(rightDownPage: this);
@@ -154,7 +161,7 @@ public class Page
 
         Half!.Next = null; // reset links for the left page
         this.Size = RightPage.Size = Size / 2; // updated sizes of pages
-        
+        // Console.ReadLine();
         this.Parent.Insert(copyInNewLevelNode);
     }
 }

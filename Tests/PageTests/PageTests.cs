@@ -19,7 +19,7 @@ public class Pages
         var node8 = new Node("n", 5, 0, 0);
         var node9 = new Node("e", 5, 0, 0);
         var node10 = new Node("m", 5, 0, 0);
-        var node11 = new Node("z", 5, 0, 0);
+        var node11 = new Node("z", 5, 0, 0);       
         builder.AddNode(node1);
         builder.AddNode(node2);
         Assert.AreEqual(2, builder.Root.Size);        

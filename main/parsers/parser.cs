@@ -9,18 +9,12 @@ public class Parser
 
     public IEnumerable<Node> Read()
     {
-        using(var fs = File.OpenRead(filePath))
-        using (var sr = new StreamReader(fs)) 
+        var lines = File.ReadLines(filePath);
+        foreach (var line in lines) 
         {
-            while(!sr.EndOfStream) 
-            {
-                var position = sr.BaseStream.Position;
-                var line = sr.ReadLine();
-                var parsed = line.Split(". ");
-
-                yield return new Node(parsed[1], Int32.Parse(parsed[0]), position, line.Length);
-            }
-        }
+            var parsed = line.Split(". ");
+            yield return new Node(parsed[1], Int32.Parse(parsed[0]), 0, 0);
+        }        
     }
 
 }

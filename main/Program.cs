@@ -1,4 +1,5 @@
 ﻿using System.Collections.Concurrent;
+using System.Diagnostics;
 // See https://aka.ms/new-console-template for more information
 
 var builder = new TreeBuilder();
@@ -21,9 +22,10 @@ var thr = new Thread(() => {
 {
     foreach(var node in parser.Read()) {
         blCollection.Add(node);    
-        Console.WriteLine(blCollection.Count);
+        // Console.WriteLine(blCollection.Count);
     }
 
+    Console.WriteLine("read");
     blCollection.CompleteAdding();
 }
 });
@@ -31,11 +33,15 @@ var thr = new Thread(() => {
 thr.Start();
 
 Node node;
-while((node = blCollection.Take()) != null)
+var delat = TimeSpan.FromSeconds(1.0);
+var stopW = new Stopwatch();
+while(blCollection.TryTake(out node, delat))
 {
-    builder.AddNode(node);
-    // Console.WriteLine("processed");
+    // stopW.Start();
+    builder.AddNode(node);    
+    // Console.WriteLine(stopW.Elapsed);
 }
+Console.WriteLine("processed");
 
 blCollection.Dispose();
  using(var file = File.Create("output.txt"))

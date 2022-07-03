@@ -39,7 +39,8 @@ public class Node : IComparable<Node>
 
 
         var firstComparison = Key1.CompareTo(other.Key1);
-        var secondComparison = Key2.CompareTo(other.Key2);
-        return firstComparison == 0 ? secondComparison: firstComparison;
+        if (firstComparison != 0)
+            return firstComparison;
+        return Key2.CompareTo(other.Key2);
     }
 }
