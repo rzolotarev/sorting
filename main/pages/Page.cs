@@ -156,14 +156,11 @@ public class Page
         siblingPage.RightPage = this.RightPage;
         this.RightPage = siblingPage;
 
-        // update parent if splitting in more than two levels
-        if (copyForSiblingNode.RightDownPage is not null)
-        {
-            var depPage = copyForSiblingNode.RightDownPage;
-            while(depPage is not null && depPage.Parent == this) {
-                depPage.Parent = siblingPage;
-                depPage = depPage.RightPage;
-            }
+        // update parent if splitting in more than two levels      
+        var depPage = copyForSiblingNode.RightDownPage;
+        while(depPage is not null && depPage.Parent == this) {
+            depPage.Parent = siblingPage;
+            depPage = depPage.RightPage;
         }
 
         var copyInNewLevelNode = Half!.Next.Copy();
